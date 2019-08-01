@@ -76,9 +76,7 @@ abstract class ApiControllers extends Controller
      */
     public function delete(int $entityId) {
 
-        $entity = $this->model->where('article_id', $entityId)->first();
-
-        dd();
+        $entity = $this->model->where('article_id', $entityId);
 
         if (!$entity) {
             return $this->sendError('Not Found', 404);
