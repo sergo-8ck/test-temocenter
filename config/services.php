@@ -44,4 +44,8 @@ return [
         ],
     ],
 
+    'api' => [
+        'token' => 'u4fIChrIkGwKaEVKOB4j5d1RQp57HqTb',
+    ]
+
 ];
