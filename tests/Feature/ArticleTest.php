@@ -3,51 +3,20 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\ApiAuthentication;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ArticleTestTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function setUp():void {
-
-        parent::setUp();
-
-        $this->refreshDatabase();
-    }
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testAuthentication()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(401);
-    }
-
-    public function testAuthenticationArticles()
-    {
-        $response = $this->get('/api/v1/articles');
-
-        $response->assertStatus(401);
-    }
-
-    public function testGetArticles()
-    {
-        $response = $this->get('/api/v1/articles', self::getToken());
-
-        $response->assertStatus(200);
-    }
-
-    public function testCreateArticle() {
+     public function testCreateArticle() {
 
         $data = [];
 
-        $response = $this->post('/api/v1/articles',$data, self::getToken());
+        $credentials = [
+            'email' => 'admin@admin.com',
+            'password' => 'admin',
+        ];
+
+        $response = $this->post('/api/v1/articles',$data, $this->getToken($credentials));
 
         $response->assertStatus(422);
 
@@ -57,13 +26,15 @@ class ArticleTestTest extends TestCase
             'description' => 'This is description'
         ];
 
-        $response = $this->post('/api/v1/articles', $data, self::getToken());
+        $response = $this->post('/api/v1/articles',$data, $this->getToken($credentials));
 
         $response->assertStatus(201);
     }
 
-    private static function getToken() {
+    private function getToken($credentials)
+    {
+        $token = auth('api')->attempt($credentials);
 
-        return [ApiAuthentication::API_KEY_HEADER => config('services.api.token')];
+        return ['Authorization' => 'Bearer ' . $token];
     }
 }
