@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 Route::prefix('/articles')->group(function() {
     Route::get('/', ['uses' => 'ArticleController@get']);
     Route::get('/{article_id}', ['uses' => 'ArticleController@detail'])->where(['article_id' => '[0-9+]']);
-    Route::post('/', ['uses' => 'ArticleController@create']);
+    Route::post('/', ['uses' => 'ArticleController@createArticle']);
     Route::delete('/{article_id}', ['uses' => 'ArticleController@delete'])->where(['article_id' => '[0-9+]']);
-    Route::put('/{article_id}', ['uses' => 'ArticleController@update'])->where(['article_id' => '[0-9+]']);
+    Route::put('/{article_id}', ['uses' => 'ArticleController@updateArticle'])->where(['article_id' => '[0-9+]']);
 });
