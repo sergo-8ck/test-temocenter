@@ -35,12 +35,12 @@ abstract class ApiControllers extends Controller
     }
 
     /**
-     * @param int $articleId
+     * @param int $entityId
      * @return mixed
      */
-    public function detail(int $articleId) {
+    public function detail(int $entityId) {
 
-        $entity = $this->model->where('article_id', $articleId)->first();
+        $entity = $this->model->where('article_id', $entityId)->first();
 
         if (!$entity) {
             return $this->sendError('Not Found', 404);
@@ -51,13 +51,13 @@ abstract class ApiControllers extends Controller
     }
 
     /**
-     * @param int $articleId
+     * @param int $entityId
      * @param Request $request
      * @return mixed
      */
-    public function update(int $articleId, Request $request) {
+    public function update(int $entityId, Request $request) {
 
-        $entity = $this->model->where('article_id', $articleId)->first();
+        $entity = $this->model->where('article_id', $entityId)->first();
 
         if (!$entity) {
             return $this->sendError('Not Found', 404);
@@ -74,9 +74,11 @@ abstract class ApiControllers extends Controller
      * @param int $entityId
      * @return mixed
      */
-    public function delete(int $articleId) {
+    public function delete(int $entityId) {
 
-        $entity = $this->model->where('article_id', $articleId)->first();
+        $entity = $this->model->where('article_id', $entityId)->first();
+
+        dd();
 
         if (!$entity) {
             return $this->sendError('Not Found', 404);
@@ -88,6 +90,11 @@ abstract class ApiControllers extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function create(Request $request) {
 
         $data = $request->validated();
