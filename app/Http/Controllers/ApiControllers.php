@@ -28,7 +28,7 @@ abstract class ApiControllers extends Controller
         $limit = (int) $request->get('limit', 100);
         $offset = (int) $request->get('offset', 0);
 
-        $result = $this->model->limit($limit)->offset($offset)->get();
+        $result = $this->model->limit($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
 
         return $this->sendResponse($result, 'OK',200);
 
